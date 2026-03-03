@@ -349,10 +349,9 @@ export default function Projects() {
               }}
             >
               {[
-                "Facebook Ads",
-                "Instagram Marketing",
+                "SEO",
                 "Google Ads",
-                "Meta Business Suite",
+                "Meta Business Suite (Facebook/Instagram Ads)",
               ].map((skill) => (
                 <span
                   key={skill}

@@ -161,7 +161,6 @@ export default function Home() {
             letterSpacing: "0.05em",
             lineHeight: 1.2,
             margin: 0,
-            wordBreak: "break-word",
           }}
         >
           {nameDisplay}
