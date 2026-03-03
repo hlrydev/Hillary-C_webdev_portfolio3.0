@@ -7,12 +7,12 @@ export const PROJECTS = [
     losing your work or it being used to train AI) while remaining lightweight and easy to use, and 
     with the added bonus of being able to dive into community writing challenges and prompts comparable to the now extinct NaNoWriMo, organize 
     projects and books, Scribeverse is a web app designed to be an all-in-one writing HQ. 
-    
+
     It has a simple and intuitive interface that allows writers to focus on their writing while also keeping 
     everything organized in one place. The web app includes features such as a built-in word count tracker, and 
     the ability to create and organize notes, chapters, books, and projects elements, as well as export in .docx, .epub, .rtf, 
     and .pdf formats, and separate fanfiction from original writing.
-    
+
     With Scribeverse, writers can easily manage their projects, joing challenges, and stay motivated to achieve their writing goals.`,
     skills: ["Typescript", "Next.js", "Tailwind", "Supabase"],
     github: "https://github.com/hlrydev/scribeverse",
