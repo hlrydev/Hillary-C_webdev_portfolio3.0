@@ -69,6 +69,8 @@ export default function Home() {
         textAlign: "center",
         position: "relative",
         padding: "1rem",
+        backdropFilter: "blur(2px)",
+        WebkitBackdropFilter: "blur(2px)",
       }}
     >
       {/* nav — stacks vertically on mobile, row on larger screens */}

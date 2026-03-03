@@ -62,7 +62,7 @@ export const PROJECTS = [
     fullDescription: `Complete digital presence for a pair of Winnipeg companies: 
     built the landing pages (currently unavailable), created and managed their socal media 
     accounts, optimized their websites for search engines, and set up their 
-    Google Business profiles. `, // add this
+    Google Business profiles. `,
     skills: [
       "WordPress",
       "Brizy",
@@ -108,8 +108,8 @@ export const PROJECTS = [
     users through interactive commands, games like Magic 8-ball, and music streaming
     features. These bots respond to user inputs in real time and even interact with each other.
     
-    <b>Note: </b> While I'm not actively using Python at the moment and this project is dated back to 2021,
-    I'm able to explain <i>some</i> of the project's logic and am open to revisiting or refreshing my knowledge if needed.`, // add this
+    Note: While I'm not actively using Python at the moment and this project is dated back to 2021,
+    I'm able to explain some of the project's logic and am open to revisiting or refreshing my knowledge if needed.`, // add this
     skills: ["Python", "Discord.py"],
     github: "https://github.com/hlrydev/Discord-Skz-bots",
     website: null,
