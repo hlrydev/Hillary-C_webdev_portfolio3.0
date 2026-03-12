@@ -89,6 +89,7 @@ export default function Home() {
       >
         {[
           { label: "projects", href: "/projects" },
+          { label: "social mgmt", href: "/creative" }, // add this
           { label: "contact", href: "/contact" },
           { label: "click me :)", href: "/click_me", className: "hide-mobile" },
         ].map(({ label, href, className }, index) => (

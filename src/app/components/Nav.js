@@ -2,8 +2,9 @@
 
 const NAV_LINKS = [
   { label: "home", href: "/" },
-  { label: "contact", href: "/contact" },
   { label: "projects", href: "/projects" },
+  { label: "social mgmt", href: "/creative" },
+  { label: "contact", href: "/contact" },
 ];
 
 export default function Nav() {

@@ -2,8 +2,8 @@
 
 import Nav from "../components/Nav";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { PROJECTS } from "./projectsData";
+import Image from "next/image";
+import { CREATIVE_WORK } from "./creativeData";
 
 function useGlitchText(finalText, startDelay = 0) {
   const [display, setDisplay] = useState("");
@@ -47,16 +47,9 @@ function useGlitchText(finalText, startDelay = 0) {
   return display;
 }
 
-function ProjectCard({
-  slug,
-  title,
-  description,
-  skills,
-  github,
-  website,
-  index,
-}) {
+function CreativeCard({ client, platform, description, stats, images, index }) {
   const [hovered, setHovered] = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
 
   return (
     <div
@@ -66,7 +59,7 @@ function ProjectCard({
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
-        padding: "1.5rem",
+        padding: "1.75rem 2rem",
         borderRadius: "4px",
         background: hovered
           ? "rgba(162, 76, 97, 0.15)"
@@ -78,23 +71,94 @@ function ProjectCard({
         transition: "background 0.2s, border-color 0.2s, box-shadow 0.2s",
         opacity: 0,
         animation: "fadeUp 0.5s ease forwards",
-        animationDelay: `${0.1 + index * 0.1}s`,
+        animationDelay: `${0.1 + index * 0.08}s`,
       }}
     >
-      {/* title */}
+      {/* image carousel */}
+      {images && images.length > 0 && (
+        <div
+          style={{
+            width: "100%",
+            borderRadius: "3px",
+            overflow: "hidden",
+            border: "1px solid rgba(226, 169, 192, 0.1)",
+            position: "relative",
+            aspectRatio: "4/5", // instagram portrait ratio
+          }}
+        >
+          <Image
+            src={images[activeImage]}
+            alt={client}
+            fill
+            style={{ objectFit: "contain" }} // contain instead of cover so nothing gets cropped
+          />
+          {images.length > 1 && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "0.5rem",
+                left: "50%",
+                transform: "translateX(-50%)",
+                display: "flex",
+                gap: "0.5rem",
+                zIndex: 2,
+              }}
+            >
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.stopPropagation(); // fix: prevent event from bubbling up
+                    setActiveImage(i);
+                  }}
+                  style={{
+                    width: "8px",
+                    height: "8px",
+                    borderRadius: "50%",
+                    border: "none",
+                    cursor: "pointer",
+                    background:
+                      i === activeImage
+                        ? "#E2A9C0"
+                        : "rgba(226, 169, 192, 0.35)",
+                    padding: 0,
+                    transition: "background 0.2s",
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* platform */}
+      <span
+        style={{
+          fontFamily: "var(--font-vt323), monospace",
+          fontSize: "0.85rem",
+          color: "#A24C61",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+        }}
+      >
+        {platform}
+      </span>
+
+      {/* client */}
       <h2
         style={{
           fontFamily: "var(--font-press-start), monospace",
-          fontSize: "clamp(0.6rem, 2.5vw, 0.9rem)",
+          fontSize: "clamp(0.55rem, 1.2vw, 0.8rem)",
           color: "#E2A9C0",
           textShadow: hovered
             ? "0 0 10px #E2A9C0, 0 0 30px #A24C61"
             : "0 0 6px rgba(226, 169, 192, 0.3)",
           margin: 0,
           transition: "text-shadow 0.2s",
+          lineHeight: 1.5,
         }}
       >
-        {title}
+        {client}
       </h2>
 
       {/* description */}
@@ -112,120 +176,34 @@ function ProjectCard({
         {description}
       </p>
 
-      {/* skill pills */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-        {skills.map((skill) => (
-          <span
-            key={skill}
-            style={{
-              fontFamily: "var(--font-vt323), monospace",
-              fontSize: "0.9rem",
-              color: "#A24C61",
-              background: "rgba(162, 76, 97, 0.15)",
-              border: "1px solid rgba(162, 76, 97, 0.35)",
-              padding: "0.15rem 0.65rem",
-              borderRadius: "999px",
-              letterSpacing: "0.08em",
-            }}
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-
-      {/* links row */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "0.75rem",
-          alignItems: "center",
-          marginTop: "0.25rem",
-        }}
-      >
-        {github && (
-          <a
-            href={github}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-vt323), monospace",
-              fontSize: "1rem",
-              color: "#E1C9D5",
-              textDecoration: "none",
-              letterSpacing: "0.08em",
-              opacity: 0.6,
-              transition: "opacity 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = 1;
-              e.currentTarget.style.color = "#E2A9C0";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = 0.6;
-              e.currentTarget.style.color = "#E1C9D5";
-            }}
-          >
-            ↗ GITHUB
-          </a>
-        )}
-        {website && (
-          <a
-            href={website}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: "var(--font-vt323), monospace",
-              fontSize: "1rem",
-              color: "#E1C9D5",
-              textDecoration: "none",
-              letterSpacing: "0.08em",
-              opacity: 0.6,
-              transition: "opacity 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = 1;
-              e.currentTarget.style.color = "#E2A9C0";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = 0.6;
-              e.currentTarget.style.color = "#E1C9D5";
-            }}
-          >
-            ↗ LIVE SITE
-          </a>
-        )}
-
-        <Link
-          href={`/projects/${slug}`}
-          style={{
-            fontFamily: "var(--font-vt323), monospace",
-            fontSize: "1rem",
-            color: "#E2A9C0",
-            textDecoration: "none",
-            letterSpacing: "0.08em",
-            marginLeft: "auto",
-            opacity: 0.8,
-            transition: "opacity 0.2s, text-shadow 0.2s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.opacity = 1;
-            e.currentTarget.style.textShadow = "0 0 8px #E2A9C0";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.opacity = 0.8;
-            e.currentTarget.style.textShadow = "none";
-          }}
-        >
-          READ MORE →
-        </Link>
-      </div>
+      {/* stats */}
+      {stats && (
+        <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          {stats.map((stat) => (
+            <span
+              key={stat}
+              style={{
+                fontFamily: "var(--font-vt323), monospace",
+                fontSize: "1rem",
+                color: "#E2A9C0",
+                background: "rgba(226, 169, 192, 0.08)",
+                border: "1px solid rgba(226, 169, 192, 0.25)",
+                padding: "0.15rem 0.75rem",
+                borderRadius: "999px",
+                letterSpacing: "0.08em",
+              }}
+            >
+              ↑ {stat}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-export default function Projects() {
-  const headerDisplay = useGlitchText("PROJECTS", 100);
+export default function Creative() {
+  const headerDisplay = useGlitchText("SOCIAL MEDIA MGMT", 100);
 
   return (
     <>
@@ -252,7 +230,6 @@ export default function Projects() {
             color: "#E2A9C0",
             textShadow: "0 0 20px #E2A9C0, 0 0 60px #A24C61",
             letterSpacing: "0.3em",
-
             opacity: 0,
             animation: "fadeUp 0.5s ease forwards",
             animationDelay: "0.1s",
@@ -272,7 +249,7 @@ export default function Projects() {
             animationDelay: "0.2s",
           }}
         >
-          {/* web dev skills */}
+          {/* social media skills */}
           <div style={{ marginBottom: "1.5rem" }}>
             <p
               style={{
@@ -285,7 +262,7 @@ export default function Projects() {
                 textAlign: "center",
               }}
             >
-              Web Design/Development Skills:
+              Social Media Management Skills:
             </p>
             <div
               style={{
@@ -296,15 +273,9 @@ export default function Projects() {
               }}
             >
               {[
-                "HTML & CSS",
-                "JavaScript",
-                "Next.js",
-                "Python",
-                "Git",
-                "WordPress",
-                "Elementor",
-                "Brizy",
-                "Canva",
+                "SEO",
+                "Google Ads",
+                "Meta Business Suite (Facebook/Instagram Ads)",
               ].map((skill) => (
                 <span
                   key={skill}
@@ -325,25 +296,11 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* divider */}
-          <div
-            style={{
-              width: "100%",
-              height: "1px",
-              background:
-                "linear-gradient(to right, rgba(226, 169, 192, 0.3), rgba(226, 169, 192, 0.05))",
-            }}
-          />
-        </div>
-
-        {/* project cards grid — 2 cols on desktop, 1 col on mobile */}
-        <div
-          className="projects-grid"
-          style={{ maxWidth: "1100px", width: "100%" }}
-        >
-          {PROJECTS.map((project, i) => (
-            <ProjectCard key={project.slug} {...project} index={i} />
-          ))}
+          <div className="creative-grid">
+            {CREATIVE_WORK.map((item, i) => (
+              <CreativeCard key={item.id} {...item} index={i} />
+            ))}
+          </div>
         </div>
 
         <style>{`
@@ -351,15 +308,13 @@ export default function Projects() {
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
           }
-
-          .projects-grid {
+          .creative-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1.25rem;
           }
-
           @media (max-width: 640px) {
-            .projects-grid {
+            .creative-grid {
               grid-template-columns: 1fr;
             }
           }
