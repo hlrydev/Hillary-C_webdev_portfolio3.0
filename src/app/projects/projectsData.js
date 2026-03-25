@@ -26,6 +26,16 @@ export const PROJECTS = [
     ],
   },
   {
+    slug: "kcahub",
+    title: "KCAHub",
+    description: "A web app designed for the K-Pop cover community.",
+    fullDescription: `With over 100 sign ups in the first week of launch, KCAHub is a web app designed for the K-Pop cover community. Designed to be similar to K-Profiles but more interactive, KCAHub is a curated platform where you can discover KCAs filtered by gen and groups, with future features including a 1v1 KCA battle system and profile claiming.`,
+    skills: ["Typescript", "Next.js", "Tailwind"],
+    github: "",
+    website: "https://kcahub.vercel.app/",
+    images: ["/img/kcahub/signup.png"],
+  },
+  {
     slug: "request-a-fanfic",
     title: "requestafanfic.com",
     description: "The first ever fanfiction request platform.",
