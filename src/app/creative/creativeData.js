@@ -9,6 +9,15 @@ export const CREATIVE_WORK = [
     images: ["/img/agmoda.jpg", "/img/agmodaay.jpg"],
   },
   {
+    id: "kcahub",
+    client: "KCAHub",
+    platform: "Instagram",
+    description:
+      "Built the website, brand identity, and managed social media strategy. Obtained 500 followers in a month, with over 700 conversions started from Instagram alone.",
+    stats: ["57.5 views", "4.1k interactions"],
+    images: ["/img/kcahub.jpg"],
+  },
+  {
     id: "interpretation-company",
     client: "Interpretation Company",
     platform: "Instagram",

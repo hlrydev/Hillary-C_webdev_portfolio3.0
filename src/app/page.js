@@ -49,10 +49,7 @@ function useGlitchText(finalText, startDelay = 400) {
 }
 
 export default function Home() {
-  const { display: nameDisplay, done: nameDone } = useGlitchText(
-    "HILLARY",
-    600,
-  );
+  const { display: nameDisplay, done: nameDone } = useGlitchText("HILLIE", 600);
   const { display: roleDisplay } = useGlitchText(
     "web dev / designer & social media manager",
     nameDone ? 200 : 99999,

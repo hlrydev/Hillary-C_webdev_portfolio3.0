@@ -21,7 +21,7 @@ const vt323 = VT323({
 });
 
 export const metadata = {
-  title: "Hillary C. Portfolio",
+  title: "Hillie C. Portfolio",
   description: "Web Designer/Dev",
 };
 
