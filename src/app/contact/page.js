@@ -25,48 +25,6 @@ const CONTACTS = [
   },
 ];
 
-function useGlitchText(finalText, startDelay = 0) {
-  const [display, setDisplay] = useState("");
-  const GLITCH_CHARS = "!@#$%^&*[]{}|<>?/\\~`";
-
-  useEffect(() => {
-    let timeout;
-    let interval;
-
-    timeout = setTimeout(() => {
-      let iterations = 0;
-      const maxIterations = finalText.length * 3;
-
-      interval = setInterval(() => {
-        setDisplay(
-          finalText
-            .split("")
-            .map((char, i) => {
-              if (char === " ") return " ";
-              if (i < iterations / 3) return finalText[i];
-              return GLITCH_CHARS[
-                Math.floor(Math.random() * GLITCH_CHARS.length)
-              ];
-            })
-            .join(""),
-        );
-        iterations++;
-        if (iterations >= maxIterations) {
-          clearInterval(interval);
-          setDisplay(finalText);
-        }
-      }, 30);
-    }, startDelay);
-
-    return () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
-    };
-  }, [finalText, startDelay]);
-
-  return display;
-}
-
 function ContactCard({ label, value, href, desc, index }) {
   const [hovered, setHovered] = useState(false);
 
@@ -144,7 +102,7 @@ function ContactCard({ label, value, href, desc, index }) {
 }
 
 export default function Contact() {
-  const headerDisplay = useGlitchText("CONTACT", 100);
+  const headerDisplay = "CONTACT";
 
   return (
     <>

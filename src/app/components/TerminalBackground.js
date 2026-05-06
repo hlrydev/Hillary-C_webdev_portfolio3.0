@@ -54,23 +54,23 @@ const LINES = [
   { text: "YOU_CANNOT_STOP_ME ;)", color: "#E2A9C0" },
 ];
 
-const CHAR_SPEED = 22;
-const LINE_PAUSE = 180;
-const LINE_HEIGHT = "2rem";
+// Delay per line — longer for short dramatic lines, shorter for long ones
+function lineDelay(text) {
+  if (!text) return 200;
+  if (text.length < 8) return 600;
+  if (text.length < 20) return 400;
+  return 280;
+}
 
 export default function TerminalBackground() {
-  const outerRef = useRef(null);
   const innerRef = useRef(null);
 
   useEffect(() => {
-    const outer = outerRef.current;
     const inner = innerRef.current;
-    if (!outer || !inner) return;
+    if (!inner) return;
 
-    // Compute a responsive font size once on mount
     const fontSize =
       Math.max(12, Math.min(20, window.innerWidth * 0.035)) + "px";
-
     let cancelled = false;
     const timeouts = [];
 
@@ -81,40 +81,33 @@ export default function TerminalBackground() {
       });
     }
 
-    function scrollToBottom() {
-      outer.scrollTop = outer.scrollHeight;
-    }
-
     async function typeLines() {
       while (!cancelled) {
         for (const { text, color } of LINES) {
           if (cancelled) return;
 
           const el = document.createElement("div");
-          el.style.whiteSpace = "pre-wrap"; // wrap instead of clip on narrow screens
+          el.style.whiteSpace = "pre-wrap";
           el.style.wordBreak = "break-all";
           el.style.fontFamily = "var(--font-vt323), monospace";
           el.style.fontSize = fontSize;
-          el.style.lineHeight = LINE_HEIGHT;
+          el.style.lineHeight = "2rem";
           el.style.letterSpacing = "0.04em";
           el.style.color = color ?? "transparent";
+          // fade each line in instead of typing char by char
+          el.style.opacity = "0";
+          el.style.transition = "opacity 0.3s ease";
+          el.textContent = text || "\u00A0";
           inner.appendChild(el);
 
-          if (!text) {
-            el.innerHTML = "&nbsp;";
-            scrollToBottom();
-            await wait(LINE_PAUSE);
-            continue;
-          }
+          // tiny rAF delay so the transition actually fires
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              el.style.opacity = "1";
+            });
+          });
 
-          for (const char of text) {
-            if (cancelled) return;
-            el.textContent += char;
-            scrollToBottom();
-            await wait(CHAR_SPEED);
-          }
-
-          await wait(LINE_PAUSE);
+          await wait(lineDelay(text));
         }
 
         await wait(2500);
@@ -133,7 +126,6 @@ export default function TerminalBackground() {
 
   return (
     <div
-      ref={outerRef}
       style={{
         position: "fixed",
         inset: 0,

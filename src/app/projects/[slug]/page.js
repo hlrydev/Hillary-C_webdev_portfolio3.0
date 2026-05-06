@@ -6,55 +6,10 @@ import { PROJECTS } from "../projectsData";
 import Image from "next/image";
 import { use } from "react";
 
-function useGlitchText(finalText, startDelay = 0) {
-  const [display, setDisplay] = useState("");
-  const GLITCH_CHARS = "!@#$%^&*[]{}|<>?/\\~`";
-
-  useEffect(() => {
-    let timeout;
-    let interval;
-
-    timeout = setTimeout(() => {
-      let iterations = 0;
-      const maxIterations = finalText.length * 3;
-
-      interval = setInterval(() => {
-        setDisplay(
-          finalText
-            .split("")
-            .map((char, i) => {
-              if (char === " ") return " ";
-              if (i < iterations / 3) return finalText[i];
-              return GLITCH_CHARS[
-                Math.floor(Math.random() * GLITCH_CHARS.length)
-              ];
-            })
-            .join(""),
-        );
-        iterations++;
-        if (iterations >= maxIterations) {
-          clearInterval(interval);
-          setDisplay(finalText);
-        }
-      }, 30);
-    }, startDelay);
-
-    return () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
-    };
-  }, [finalText, startDelay]);
-
-  return display;
-}
-
 export default function ProjectPage({ params }) {
   const { slug } = use(params);
   const project = PROJECTS.find((p) => p.slug === slug);
-  const titleDisplay = useGlitchText(
-    project ? project.title.toUpperCase() : "",
-    200,
-  );
+  const titleDisplay = project ? project.title.toUpperCase() : "";
 
   if (!project) {
     return (

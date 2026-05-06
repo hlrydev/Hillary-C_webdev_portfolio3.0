@@ -5,48 +5,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CREATIVE_WORK } from "./creativeData";
 
-function useGlitchText(finalText, startDelay = 0) {
-  const [display, setDisplay] = useState("");
-  const GLITCH_CHARS = "!@#$%^&*[]{}|<>?/\\~`";
-
-  useEffect(() => {
-    let timeout;
-    let interval;
-
-    timeout = setTimeout(() => {
-      let iterations = 0;
-      const maxIterations = finalText.length * 3;
-
-      interval = setInterval(() => {
-        setDisplay(
-          finalText
-            .split("")
-            .map((char, i) => {
-              if (char === " ") return " ";
-              if (i < iterations / 3) return finalText[i];
-              return GLITCH_CHARS[
-                Math.floor(Math.random() * GLITCH_CHARS.length)
-              ];
-            })
-            .join(""),
-        );
-        iterations++;
-        if (iterations >= maxIterations) {
-          clearInterval(interval);
-          setDisplay(finalText);
-        }
-      }, 30);
-    }, startDelay);
-
-    return () => {
-      clearTimeout(timeout);
-      clearInterval(interval);
-    };
-  }, [finalText, startDelay]);
-
-  return display;
-}
-
 function CreativeCard({ client, platform, description, stats, images, index }) {
   const [hovered, setHovered] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
@@ -83,7 +41,7 @@ function CreativeCard({ client, platform, description, stats, images, index }) {
             overflow: "hidden",
             border: "1px solid rgba(226, 169, 192, 0.1)",
             position: "relative",
-            aspectRatio: "4/5", // instagram portrait ratio
+            aspectRatio: "16 / 9",
           }}
         >
           <Image
@@ -203,7 +161,7 @@ function CreativeCard({ client, platform, description, stats, images, index }) {
 }
 
 export default function Creative() {
-  const headerDisplay = useGlitchText("SOCIAL MEDIA MGMT", 100);
+  const headerDisplay = "SOCIAL MEDIA MGMT";
 
   return (
     <>

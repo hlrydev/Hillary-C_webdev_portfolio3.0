@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-const GLITCH_CHARS = "!@#$%^&*[]{}|<>?/\\~`";
-
 function useGlitchText(finalText, startDelay = 400) {
   const [display, setDisplay] = useState("");
   const [done, setDone] = useState(false);
+  const GLITCH_CHARS = "!@#$%^&*[]{}|<>?/\\~`";
 
   useEffect(() => {
     let timeout;
@@ -29,7 +28,6 @@ function useGlitchText(finalText, startDelay = 400) {
             })
             .join(""),
         );
-
         iterations++;
         if (iterations >= maxIterations) {
           clearInterval(interval);
@@ -48,12 +46,10 @@ function useGlitchText(finalText, startDelay = 400) {
   return { display, done };
 }
 
+const ROLE = "web dev / designer & social media manager";
+
 export default function Home() {
   const { display: nameDisplay, done: nameDone } = useGlitchText("HILLIE", 600);
-  const { display: roleDisplay } = useGlitchText(
-    "web dev / designer & social media manager",
-    nameDone ? 200 : 99999,
-  );
 
   return (
     <main
@@ -70,7 +66,6 @@ export default function Home() {
         WebkitBackdropFilter: "blur(2px)",
       }}
     >
-      {/* nav — stacks vertically on mobile, row on larger screens */}
       <nav
         style={{
           position: "absolute",
@@ -86,7 +81,7 @@ export default function Home() {
       >
         {[
           { label: "projects", href: "/projects" },
-          { label: "social mgmt", href: "/creative" }, // add this
+          { label: "social mgmt", href: "/creative" },
           { label: "contact", href: "/contact" },
           { label: "click me :)", href: "/click_me", className: "hide-mobile" },
         ].map(({ label, href, className }, index) => (
@@ -133,7 +128,6 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* main content */}
       <div
         style={{
           padding: "clamp(1.5rem, 5vw, 3rem) clamp(1rem, 5vw, 4rem)",
@@ -164,50 +158,47 @@ export default function Home() {
           {nameDisplay}
         </h1>
 
-        {nameDone && (
-          <p
+        {/* role fades in after HILLIE finishes — no glitch, just a clean fade */}
+        <p
+          style={{
+            fontFamily: "var(--font-vt323), monospace",
+            fontSize: "clamp(1rem, 4vw, 1.4rem)",
+            color: "#E1C9D5",
+            margin: 0,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            maxWidth: "90vw",
+            lineHeight: 1.4,
+            opacity: nameDone ? 0.75 : 0,
+            transform: nameDone ? "translateY(0)" : "translateY(8px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
+          {ROLE}
+          <span
             style={{
-              fontFamily: "var(--font-vt323), monospace",
-              fontSize: "clamp(1rem, 4vw, 1.4rem)",
-              color: "#E1C9D5",
-              opacity: 0.75,
-              margin: 0,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              maxWidth: "90vw",
-              lineHeight: 1.4,
+              display: "inline-block",
+              width: "2px",
+              height: "1em",
+              background: "#E2A9C0",
+              marginLeft: "4px",
+              verticalAlign: "middle",
+              animation: nameDone ? "blink 1s step-end infinite" : "none",
             }}
-          >
-            {roleDisplay}
-            <span
-              style={{
-                display: "inline-block",
-                width: "2px",
-                height: "1em",
-                background: "#E2A9C0",
-                marginLeft: "4px",
-                verticalAlign: "middle",
-                animation: "blink 1s step-end infinite",
-              }}
-            />
-          </p>
-        )}
+          />
+        </p>
       </div>
 
       <style>{`
-        .hide-mobile {
-        display: none;
-        }
+        .hide-mobile { display: none; }
 
         @media (min-width: 768px) {
-        .hide-mobile {
-          display: inline-block;
-          }
+          .hide-mobile { display: inline-block; }
         }
-  
+
         @keyframes blink {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
+          50%       { opacity: 0; }
         }
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(-6px); }
