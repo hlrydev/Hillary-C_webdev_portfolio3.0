@@ -263,6 +263,7 @@ export default function Projects() {
                 "Elementor",
                 "Brizy",
                 "Canva",
+                "Woocommerce",
               ].map((skill) => (
                 <span
                   key={skill}

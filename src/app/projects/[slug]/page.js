@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Nav from "../../components/Nav";
 import { PROJECTS } from "../projectsData";
 import Image from "next/image";

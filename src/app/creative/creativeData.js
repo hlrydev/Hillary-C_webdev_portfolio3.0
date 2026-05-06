@@ -14,7 +14,7 @@ export const CREATIVE_WORK = [
     platform: "Instagram",
     description:
       "Built the website, brand identity, and managed social media strategy. Obtained 500 followers in a month, with over 700 conversions started from Instagram alone.",
-    stats: ["57.5 views", "4.1k interactions"],
+    stats: ["57.5k views", "4.1k interactions"],
     images: ["/img/kcahub.jpg"],
   },
   {
